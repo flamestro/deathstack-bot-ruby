@@ -1,17 +1,21 @@
-#Eingabe der fen Not und des Players
-puts     "Enter Fen"
-fen    = gets.chomp
-puts     "Enter Player Char"
-player = gets.chomp
-
 
 #spalte die fen Notation in eine Collection mit 
 #den stapeln inklusive leere Stapel
-#aa,aa,aa,aa,aa,aa,aa,/,/,aa,aa,aa,aa
 def splitFen(fenNot)
-	felder = fenNot.gsub('/',',').split(",")
+    count=0
+    result =Array.new
+	felder = (fenNot+",").gsub('/',',').gsub(',,',', ,').split(",")
+    felder.each do |value| 
+        if value== " "
+            result[count] = ""
+        else 
+            result[count] = value
+        end
+    count += 1
+    end
+    result
 end
-p splitFen(fen)
+
 def listMoves 
 	
 end
