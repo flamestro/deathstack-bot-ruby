@@ -1,4 +1,3 @@
-
 #spalte die fen Notation in eine Collection mit 
 #den stapeln inklusive leere Stapel
 def splitFen(fenNot)
@@ -19,4 +18,3 @@ end
 def listMoves 
 	
 end
-
