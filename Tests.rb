@@ -70,4 +70,33 @@ class TestAll < Test::Unit::TestCase
         assert_equal(4,createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[3].spalte)
     end
     
+    def test_createGameStackListSpalteweiterhinten
+        assert_equal(6,createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[17].spalte)
+    end
+    def test_createGameStackListZeileWeiterHinten
+        assert_equal(18,createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[17].indexNr)
+        assert_equal(4,createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[17].zeile)
+    end
+      #possible neg
+    def test_getPossibleNeg
+        assert_equal(5,getPossibleNeg(2,5))
+    end
+      
+    def test_getPossibleNeg2
+        assert_equal(2,getPossibleNeg(2,12))
+    end
+     def test_getPossibleNeg3
+        assert_equal(2,getPossibleNeg(2,10))
+    end
+       #possible pos
+    def test_getPossiblePos
+        assert_equal(5,getPossiblePos(2,5))
+    end
+      
+    def test_getPossiblePos2
+        assert_equal(4,getPossiblePos(2,12))
+    end
+     def test_getPossiblePos3
+        assert_equal(2,getPossiblePos(2,10))
+    end
 end 
