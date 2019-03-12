@@ -62,7 +62,7 @@ class FieldPos
         @spalte    = spalte
     end
     def same?(other)
-        @zeile == zeile && @spalte == spalte
+        @zeile == other.zeile && @spalte == other.spalte
     end
     def to_s
     if($spalteConv[spalte] == nil || $zeileConv[zeile] == nil )
@@ -82,10 +82,11 @@ class Move
         @schritte    = schritte
         @endPos      = endPos
     end
+   
+    
     def same?(other)
         @startPos == other.startPos && @schritte == other.schritte && @endPos == other.endPos
     end
-    
     def to_s 
         
         (startPos.to_s)+"-"+(schritte.to_s)+"-"+(endPos.to_s)
