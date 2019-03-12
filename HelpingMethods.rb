@@ -63,11 +63,46 @@ def getPossibleNeg(pos,schritte)
     reflect(distance-1, count)+1
 end
 
+def checkTooTallExists(gameStack,playerOnTurn)
+    result = false 
+    cntTooTall = 0
+    while cntTooTall< gameStack.length
+     if  gameStack[cntTooTall].value > 4 && gameStack[cntTooTall].ownedBy == playerOnTurn
+       result = true
+     end
+     cntTooTall+=1
+    end
+    result
+end
 def calculateMoves(gameStack,playerOnTurn)
     listOfMoves = Array.new
     cnt = 0 
     i   = 0
-    while i< gameStack.length
+    
+   
+    tooTallExists = checkTooTallExists(gameStack,playerOnTurn)
+  
+    while i< gameStack.length && tooTallExists == true
+    if  gameStack[i].ownedBy == playerOnTurn &&gameStack[i].value > 4
+    count = gameStack[i].value.dup
+      
+    while gameStack[i].value-count < 5
+        listOfMoves[cnt]   = Move.new(FieldPos.new(gameStack[i].zeile,gameStack[i].spalte), count, FieldPos.new(gameStack[i].zeile,getPossiblePos(gameStack[i].spalte,count)))
+        listOfMoves[cnt+1] = Move.new(FieldPos.new(gameStack[i].zeile,gameStack[i].spalte), count, FieldPos.new(gameStack[i].zeile,getPossibleNeg(gameStack[i].spalte,count)))
+        listOfMoves[cnt+2] = Move.new(FieldPos.new(gameStack[i].zeile,gameStack[i].spalte), count, FieldPos.new(getPossiblePos(gameStack[i].zeile,count),gameStack[i].spalte))
+        listOfMoves[cnt+3] = Move.new(FieldPos.new(gameStack[i].zeile,gameStack[i].spalte), count, FieldPos.new(getPossibleNeg(gameStack[i].zeile,count),gameStack[i].spalte))
+        listOfMoves[cnt+4] = Move.new(FieldPos.new(gameStack[i].zeile,gameStack[i].spalte), count, FieldPos.new(getPossiblePos(gameStack[i].zeile,count),getPossiblePos(gameStack[i].spalte,count)))
+        listOfMoves[cnt+5] = Move.new(FieldPos.new(gameStack[i].zeile,gameStack[i].spalte), count, FieldPos.new(getPossibleNeg(gameStack[i].zeile,count),getPossiblePos(gameStack[i].spalte,count)))
+        listOfMoves[cnt+6] = Move.new(FieldPos.new(gameStack[i].zeile,gameStack[i].spalte), count, FieldPos.new(getPossiblePos(gameStack[i].zeile,count),getPossibleNeg(gameStack[i].spalte,count)))
+        listOfMoves[cnt+7] = Move.new(FieldPos.new(gameStack[i].zeile,gameStack[i].spalte), count, FieldPos.new(getPossibleNeg(gameStack[i].zeile,count),getPossibleNeg(gameStack[i].spalte,count)))
+        count             -= 1
+        cnt               += 8
+    end
+    end
+    i +=1
+    end
+    
+    while i< gameStack.length && tooTallExists == false
     if  gameStack[i].ownedBy == playerOnTurn
     count = gameStack[i].value.dup
       
@@ -86,6 +121,7 @@ def calculateMoves(gameStack,playerOnTurn)
     end
     i +=1
     end
+   
     listOfMoves
 end
 
