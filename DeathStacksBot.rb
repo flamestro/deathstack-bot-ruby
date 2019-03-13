@@ -6,4 +6,4 @@ require_relative 'HelpingMethods'
 #completeFen = gets.chomp
 #listMoves(completeFen)
 
-listMoves("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,, a")
+listMoves("rr,rr,rr,rr,rr,rr/,,,,,/,,,,,/,,,,,/,,,,,/bb,bb,bb,bb,bb,bb r")

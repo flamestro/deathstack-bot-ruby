@@ -191,12 +191,12 @@ def listMoves(completeFen)
     clearedMoves  = uniqMoves(moves)
     
     movesString   = ""
-    print "["
+    print "\"["
     clearedMoves.each do |move|
     if(move.to_s!="")
     movesString += move.to_s+","#
     end
     end
     print movesString[0,movesString.length-1]
-    print "]\n"+clearedMoves.length.to_s
+    print "]\"\n"
 end
