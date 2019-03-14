@@ -1,40 +1,54 @@
-$width_height = 6
-    $zeileConv= {
-    1 => '1',
-    2 => '2',
-    3 => '3',
-    4 => '4',
-    5 => '5',
-    6 => '6',
+   #The Width and the heigth of a Gamefield
+   $width_height = 6
+   #this Hash can convert a row in Integer-form into a String representation
+   $rowConv= {
+    1   => '1',
+    2   => '2',
+    3   => '3',
+    4   => '4',
+    5   => '5',
+    6   => '6',
     nil => 'x'
     }
     
-    $spalteConv= {
-    1 => 'a',
-    2 => 'b',
-    3 => 'c',
-    4 => 'd',
-    5 => 'e',
-    6 => 'f',
+	#this Hash can convert a column in Integer-form into a String representation 
+    $columnConv= {
+    1   => 'a',
+    2   => 'b',
+    3   => 'c',
+    4   => 'd',
+    5   => 'e',
+    6   => 'f',
     nil => 'x'
     }
-#simulates a stack on the GameField
+#this object saves informations about the different positions on the gamefield
 class GameStack 
-    attr_accessor :fenFeld , :value , :ownedBy , :indexNr , :zeile , :spalte
-    def initialize(fenFeld,indexNr)
-        @indexNr    = indexNr+1
-        @fenFeld    = fenFeld
-        @value      = fenFeld.length
-        @ownedBy    = ""
-        @zeile      = zeileAusindexNr
-        @spalte     = spalteAusindexNr
+	#this line lets us read the values inside the instance variables
+    attr_accessor :fenfield , :value , :ownedBy , :indexNr , :row , :column
+	#the constructor needs 2 parameters : fenfield :: String ( saves the representation of a stack on a position (a.e. "rrr","bbbb","brrb"...)
+	#also it needs indexNr::Integer represents the position of every position on the gamefield in a given array 
+	#[0 ,1 , 2, 3, 4, 5]
+	#[6 , 7, 8,9,10, 11]
+	#[12,13,14,15,16,17]
+	#[18,19,20,21,22,23]
+	#[24,25,26,27,28,29]
+	#[30,31,32,33,34,35]
+	#the gamefield looks like this and every position gets its own indexNr
+    def initialize(fenfield,indexNr)
+        @indexNr     = indexNr+1
+        @fenfield    = fenfield
+        @value       = fenfield.length
+        @ownedBy     = ""
+        @row         = rowbyIndex
+        @column      = columnbyIndex
         if @value > 0
-        @ownedBy = @fenFeld[0] 
+        @ownedBy     = @fenfield[0] 
         end
     end
+	
     protected
-    #calculates the row
-    def zeileAusindexNr
+    #this method calculates the row of a this object, by its indexNr
+    def rowbyIndex
         temp = @indexNr.dup
         cnt = 0
         while temp > $width_height
@@ -43,8 +57,8 @@ class GameStack
         end
         $width_height-cnt
     end
-    #calculates the col
-    def spalteAusindexNr
+    #this method calculates the column of a this object, by its indexNr
+    def columnbyIndex
         temp = @indexNr.dup
         while temp > $width_height
         temp -= $width_height
@@ -54,42 +68,52 @@ class GameStack
 end
 
 
-
+#This Class represents a position on the gamefield ( row and column)
 class FieldPos
-     attr_accessor :zeile , :spalte     
-    def initialize(zeile,spalte)
-        @zeile    = zeile
-        @spalte    = spalte
+	#this line lets us read the values inside the instance variables
+    attr_reader :row , :column
+	#constructor to set the values for the instance variables: row :: Integer, column :: Integer
+    def initialize(row,column)
+        @row    = row
+        @column    = column
     end
-    def same?(other)
-        @zeile == other.zeile && @spalte == other.spalte
+	#this method checks if the object, which calls the method has the same instance variable values as the given object given 
+	#as parameter 
+	def same?(other)
+        @row == other.row && @column == other.column
     end
+	#this method converts the position on the gamefield in to a readable string (like "a2","b4"...)
     def to_s
-    if($spalteConv[spalte] == nil || $zeileConv[zeile] == nil )
+	#if something went wrong and the given position is not in a valid gamefield then "x" will be returned
+    if($columnConv[column] == nil || $rowConv[row] == nil )
         "x"
     else
-        $spalteConv[spalte]+$zeileConv[zeile]
+        $columnConv[column]+$rowConv[row]
     end
     end
     
     
 end
 
+# This Class represents a move by saving informations about the start-position, the steps and the end-position of a move
 class Move 
-    attr_accessor :startPos , :schritte , :endPos 
-    def initialize(startPos,schritte,endPos)
+	#this line lets us read the values of our instance variables
+    attr_reader :startPos , :steps , :endPos 
+	
+	#gets 3 parameters: startPos :: FieldPos, steps :: Integer, endPos :: FieldPos
+    def initialize(startPos,steps,endPos)
         @startPos    = startPos
-        @schritte    = schritte
+        @steps       = steps
         @endPos      = endPos
     end
    
-    
+    #this method checks if the object, which calls the method has the same instance variable values as the given object given 
+	#as parameter
     def same?(other)
-        @startPos == other.startPos && @schritte == other.schritte && @endPos == other.endPos
+        @startPos == other.startPos && @steps == other.steps && @endPos == other.endPos
     end
+	#this method returns the move in String form -> startPos-steps-endPos
     def to_s 
-        
-        (startPos.to_s)+"-"+(schritte.to_s)+"-"+(endPos.to_s)
-      
+        (startPos.to_s)+"-"+(steps.to_s)+"-"+(endPos.to_s)
     end
 end

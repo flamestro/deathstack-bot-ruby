@@ -32,7 +32,7 @@ class TestAll < Test::Unit::TestCase
     
     #createGameStackList Tests
     def test_createGameStackListfenFeld
-        assert_equal("aa",createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[0].fenFeld)
+        assert_equal("aa",createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[0].fenfield)
     end
     def test_createGameStackListvalue
         assert_equal(2,createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[0].value)
@@ -44,15 +44,15 @@ class TestAll < Test::Unit::TestCase
         assert_equal(1,createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[0].indexNr)
     end
     def test_createGameStackListZeile
-        assert_equal(6,createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[0].zeile)
+        assert_equal(6,createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[0].row)
     end
     def test_createGameStackListSpalte
-        assert_equal(1,createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[0].spalte)
+        assert_equal(1,createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[0].column)
     end
     
      #createGameStackList Tests
     def test_createGameStackListfenFeldEmpty
-        assert_equal("",createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[3].fenFeld)
+        assert_equal("",createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[3].fenfield)
     end
     def test_createGameStackListvalueEmpty
         assert_equal(0,createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[3].value)
@@ -64,18 +64,18 @@ class TestAll < Test::Unit::TestCase
         assert_equal(4,createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[3].indexNr)
     end
     def test_createGameStackListZeileEmpty
-        assert_equal(6,createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[3].zeile)
+        assert_equal(6,createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[3].row)
     end
     def test_createGameStackListSpalteEmpty
-        assert_equal(4,createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[3].spalte)
+        assert_equal(4,createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[3].column)
     end
     
     def test_createGameStackListSpalteweiterhinten
-        assert_equal(6,createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[17].spalte)
+        assert_equal(6,createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[17].column)
     end
     def test_createGameStackListZeileWeiterHinten
         assert_equal(18,createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[17].indexNr)
-        assert_equal(4,createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[17].zeile)
+        assert_equal(4,createGameStackList("aa,aa,,,,/,,,,,/,,,,,aa/,,,,,/,,,,,/,,,,,")[17].row)
     end
       #possible neg
     def test_getPossibleNeg
