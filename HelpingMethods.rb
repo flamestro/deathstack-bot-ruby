@@ -1,4 +1,4 @@
-require_relative 'Spielbrett'
+require_relative 'GameField'
 
 #The Width and the heigth of a Gamefield
 $width_height = 6

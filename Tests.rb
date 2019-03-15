@@ -1,4 +1,4 @@
-require_relative 'Spielbrett'
+require_relative 'GameField'
 require_relative 'HelpingMethods'
 require 'test/unit'
 
