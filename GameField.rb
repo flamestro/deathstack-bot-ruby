@@ -98,19 +98,20 @@ end
 # This Class represents a move by saving informations about the start-position, the steps and the end-position of a move
 class Move 
 	#this line lets us read the values of our instance variables
-    attr_reader :startPos , :steps , :endPos 
+    attr_reader :startPos , :steps , :endPos , :asString
 	
 	#gets 3 parameters: startPos :: FieldPos, steps :: Integer, endPos :: FieldPos
     def initialize(startPos,steps,endPos)
         @startPos    = startPos
         @steps       = steps
         @endPos      = endPos
-    end
+        @asString    = self.to_s
+	end
    
     #this method checks if the object, which calls the method has the same instance variable values as the given object given 
 	#as parameter
-    def same?(other)
-        @startPos == other.startPos && @steps == other.steps && @endPos == other.endPos
+    def same(other)
+       result =  @startPos == other.startPos && @steps == other.steps && @endPos == other.endPos
     end
 	#this method returns the move in String form -> startPos-steps-endPos
     def to_s 
