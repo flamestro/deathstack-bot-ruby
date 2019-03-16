@@ -197,7 +197,6 @@ end
 
 
 
-
 #this method returns every valid move, for a given completeFen as a string
 #complete fen :: String [a.e. "rr,rr,rr,rr,rr/,r,,rr,,rr/rrr,rrr,r,,rrr,r r"]
 def listMoves(completeFen) 

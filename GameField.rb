@@ -27,13 +27,13 @@ class GameStack
     attr_accessor :fenfield , :value , :ownedBy , :indexNr , :row , :column
 	#the constructor needs 2 parameters : fenfield :: String ( saves the representation of a stack on a position (a.e. "rrr","bbbb","brrb"...)
 	#also it needs indexNr::Integer represents the position of every position on the gamefield in a given array 
-	#[0 ,1 , 2, 3, 4, 5]
-	#[6 , 7, 8,9,10, 11]
-	#[12,13,14,15,16,17]
-	#[18,19,20,21,22,23]
-	#[24,25,26,27,28,29]
-	#[30,31,32,33,34,35]
-	#the gamefield looks like this and every position gets its own indexNr
+	#[1 , 2, 3, 4, 5, 6]
+	#[7, 8,9,10, 11, 12]
+	#[13,14,15,16,17,18]
+	#[19,20,21,22,23,24]
+	#[25,26,27,28,29,30]
+	#[31,32,33,34,35,36]
+	#the gamefield looks like this and every position gets its own indexNr 
     def initialize(fenfield,indexNr)
         @indexNr     = indexNr+1
         @fenfield    = fenfield
