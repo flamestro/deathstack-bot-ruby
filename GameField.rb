@@ -1,16 +1,7 @@
-   #The Width and the heigth of a Gamefield
+require_relative 'ValuedMoveMaker' 
+ #The Width and the heigth of a Gamefield
    $width_height = 6
-   #this Hash can convert a row in Integer-form into a String representation
-   $rowConv= {
-    1   => '1',
-    2   => '2',
-    3   => '3',
-    4   => '4',
-    5   => '5',
-    6   => '6',
-    nil => 'x'
-    }
-    
+
 	#this Hash can convert a column in Integer-form into a String representation 
     $columnConv= {
     1   => 'a',
@@ -65,6 +56,9 @@ class GameStack
         end
         temp
     end
+	
+    
+    
 end
 
 
@@ -85,10 +79,10 @@ class FieldPos
 	#this method converts the position on the gamefield in to a readable string (like "a2","b4"...)
     def to_s
 	#if something went wrong and the given position is not in a valid gamefield then "x" will be returned
-    if($columnConv[column] == nil || $rowConv[row] == nil )
+    if($columnConv[column] == nil || row.to_s == "" )
         "x"
     else
-        $columnConv[column]+$rowConv[row]
+        $columnConv[column]+row.to_s
     end
     end
     
@@ -117,4 +111,19 @@ class Move
     def to_s 
         (startPos.to_s)+"-"+(steps.to_s)+"-"+(endPos.to_s)
     end
+	
+    #values the method calling move object, with a given player and a given GameStackList
+	def valueMove(gsList,player)
+	val = 0
+	gsListAfterMove = afterMove(gsList,self)
+	gsListAfterMove.each do |elem|
+        
+        if elem.ownedBy==player &&elem.val <5
+		val += elem.value *10
+		elsif elem.ownedBy==player &&elem.val >4
+			val += (elem.value-4)*5+40
+		end
+	end
+	val
+	end
 end
