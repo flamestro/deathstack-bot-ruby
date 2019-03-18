@@ -9,34 +9,50 @@ def getMove(completeFen)
     moves         = calculateMoves(gameStacklist,player)
     clearedMoves  = moves.uniq(&:asString)
     
-    moveString   = "\"["+ minimax(clearedMoves,gameStacklist,player)+"]\"\n"
+    moveString   = "\"["+ minimax(clearedMoves,gameStacklist,player).to_s+"]\"\n"
     print moveString
 end
 #estimates the new gameStacklist after the a move is made
 	def afterMove(gsList,move)
-	gsListnew = gsList.dup
+	gsListnew = Marshal::load(Marshal.dump(gsList))
 	temp= ""
+  
 	gsListnew.each do |elem|
 		if FieldPos.new(elem.row,elem.column).to_s == move.startPos.to_s
-			temp1 = elem.fenfield[0,move.steps-1]
-			elem.fenfield = elem.fenfield[move.steps-1,elem.value-1]
+			temp = elem.fenfield[0,move.steps-1]
+			elem.fenfield = elem.fenfield[move.steps,elem.value-1]
+            elem.value = elem.fenfield.length
+            if elem.value >0
+            elem.ownedBy = elem.fenfield[0] 
+            else 
+            elem.ownedBy = ""
+            end
 		end
 	end
 	gsListnew.each do |elem|
 		if FieldPos.new(elem.row,elem.column).to_s == move.endPos.to_s
 			elem.fenfield = temp +elem.fenfield
+            elem.value = elem.fenfield.length
+            if elem.value >0
+            elem.ownedBy = elem.fenfield[0] 
+            else 
+            elem.ownedBy = ""
+            end
 		end
 	end
+    
 	gsListnew
     end
     
-#returns the two bes moves inside the given moves array [0] -> best , [1] -> second best
+#returns the two best moves inside the given moves array [0] -> best , [1] -> second best
 def valueBest(moves,gsList,player)
 	valMoves = []
+    gsListNew = Marshal::load(Marshal.dump(gsList))
 	moves.each_with_index do |move, index|
-		valMoves[index]= move.valueMove(gsList,player)
+		valMoves[index]= move.valueMove(gsListNew,player)
 	end
-	bestvals = valMoves.dup.sort[valMoves.length-2,valMoves.length-1]
+    valMovesnew = Marshal::load(Marshal.dump(valMoves))
+	bestvals = valMovesnew.sort[valMoves.length-2,valMoves.length-1]
 	bestMoves = [moves[valMoves.index(bestvals[1])],moves[valMoves.index(bestvals[0])]]
 end
 
@@ -50,59 +66,82 @@ def changePlayer(player)
     end
 end
 
-def minimax(moves,gsList,player)
+def minimax(moves,givenGsList,player)
     valuesMoves = Array.new
+    gsList = Marshal::load(Marshal.dump(givenGsList))
     moves.each_with_index do |move,index|
         valuesMoves[index] = miniMaxred(move,gsList,player,player,$iterationDepth)
+        puts "----------------Move Number:"+(index+1).to_s + " From a list with the length of : " + moves.length.to_s
     end
     indexOfBest= valuesMoves.index(valuesMoves.max)
    
-    
+    p valuesMoves
     moves[indexOfBest]
 end
+def boardFinished(gsList,player)
+    gsListNew = Marshal::load(Marshal.dump(gsList))
+    otherPlayer = changePlayer(player)
+    gsListNew.each do |elem|
+    
+    if elem.ownedBy == otherPlayer 
+    return false
+    end
+    
+    end
+    
+    true
+end
 
-def miniMaxred( move, gsList,playerstart,playeriterate,iteration)
-    
+def pow(input,power)
+    power -=1
+    power.times do
+    input *= input
+    end
+    input
+end
+def miniMaxred( move,  givenGsList,playerstart,playeriterate,iteration)
+    gsList = Marshal::load(Marshal.dump(givenGsList))
+    if iteration == 0
+    return move.valueMove(gsList,playerstart) 
+    end
     max = playerstart == playeriterate
-    newMoves = Array.new
-    bestValed = Array.new
-    
-    move.valueMove(gsList,playeriterate) if iteration == 0
-    
-    
     newMoves = calculateMoves(afterMove(gsList,move),playeriterate)
-    newMoves.delete(nil)
-    clearedMoves  = newMoves.uniq(&:asString)
+
+    clearednewMoves  = newMoves.uniq(&:asString)
     
-    bestValed = valueBest(clearedMoves,afterMove(gsList,move),changePlayer(playeriterate))
-    
+    bestValed = valueBest(clearednewMoves,afterMove(gsList,move),changePlayer(playeriterate))
+
     
     if(bestValed.length >1)
-    leftNode  = miniMaxred(bestValed[0], afterMove(gsList,bestValed[0]),playerstart,changePlayer(playeriterate),iteration-1)
+    puts "LeftNode iteration : " + iteration.to_s + " actual MoveVal = " + move.valueMove(givenGsList,playerstart).to_s
+    leftNode  = miniMaxred(bestValed[1], afterMove(gsList,move),playerstart,changePlayer(playeriterate),iteration-1)
     elsif max 
-    leftNode  =1000
+    leftNode  = 1000
     else 
     leftNode  = 0
     end
     
     if(bestValed.length >1)
-    rigthNode  = miniMaxred(bestValed[1], afterMove(gsList,bestValed[1]),playerstart,changePlayer(playeriterate),iteration-1)
+    puts "RightNode iteration : " + iteration.to_s+ " actual MoveVal = " + move.valueMove(givenGsList,playerstart).to_s
+    rightNode  = miniMaxred(bestValed[0], afterMove(gsList,move),playerstart,changePlayer(playeriterate),iteration-1)
     elsif max 
-    rigthNode  = 1000
+    rightNode  = 1000
     else 
-    rigthNode  = 0
+    rightNode  = 0
     end
     
-    if max && leftNode >  rightNode
-        leftNode+(10^iteration)
+    if boardFinished(afterMove(givenGsList,move),playeriterate)
+        10000+pow(10,iteration)
+    elsif max && leftNode >  rightNode
+        leftNode+pow(10,iteration)
     elsif max && leftNode <= rightNode 
-        rightNode+(10^iteration)
+        rightNode+pow(10,iteration)
     elsif max==false && leftNode >  rightNode
-        rightNode-(10^iteration)
+        rightNode-pow(10,iteration)
     elsif max==false && leftNode <= rightNode
-        leftNode-(10^iteration)  
+        leftNode-pow(10,iteration)
     end
     
     end
-    
+ 
 

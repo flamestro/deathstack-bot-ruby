@@ -115,12 +115,13 @@ class Move
     #values the method calling move object, with a given player and a given GameStackList
 	def valueMove(gsList,player)
 	val = 0
-	gsListAfterMove = afterMove(gsList,self)
+    gsListNew = Marshal::load(Marshal.dump(gsList))
+	gsListAfterMove = afterMove(gsListNew,self)
 	gsListAfterMove.each do |elem|
         
-        if elem.ownedBy==player &&elem.val <5
-		val += elem.value *10
-		elsif elem.ownedBy==player &&elem.val >4
+        if elem.ownedBy==player &&elem.value <5
+		val += (elem.value) *10
+		elsif elem.ownedBy==player &&elem.value >4
 			val += (elem.value-4)*5+40
 		end
 	end
