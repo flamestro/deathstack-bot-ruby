@@ -7,7 +7,6 @@ def getMove(completeFen)
     player        = splitCompleteFen(completeFen)[1]
     gameStacklist = createGameStackList(fen)
     moves         = calculateMoves(gameStacklist,player)
-    moves.delete(nil)
     clearedMoves  = moves.uniq(&:asString)
     
     moveString   = "\"["+ minimax(clearedMoves,gameStacklist,player)+"]\"\n"

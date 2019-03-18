@@ -98,42 +98,41 @@ def calculateMoves(gameStack,playerOnTurn)
     count = gameStack[i].value.dup
       
     while gameStack[i].value-count < 5
-		z= 0
+		
 		startPos= FieldPos.new(gameStack[i].row,gameStack[i].column)
 		if(!startPos.same?(FieldPos.new(gameStack[i].row,getPossiblePos(gameStack[i].column,count))))
         listOfMoves[cnt]   = Move.new(startPos, count, FieldPos.new(gameStack[i].row,getPossiblePos(gameStack[i].column,count)))
-        z+=1
+        cnt+=1
         end
 	    if(!startPos.same?(FieldPos.new(gameStack[i].row,getPossibleNeg(gameStack[i].column,count))))
-		listOfMoves[cnt+1] = Move.new(startPos, count, FieldPos.new(gameStack[i].row,getPossibleNeg(gameStack[i].column,count)))
-        z+=1
+		listOfMoves[cnt] = Move.new(startPos, count, FieldPos.new(gameStack[i].row,getPossibleNeg(gameStack[i].column,count)))
+        cnt+=1
         end
 		if(!startPos.same?(FieldPos.new(getPossiblePos(gameStack[i].row,count),gameStack[i].column)))
-		listOfMoves[cnt+2] = Move.new(startPos, count, FieldPos.new(getPossiblePos(gameStack[i].row,count),gameStack[i].column))
-        z+=1
+		listOfMoves[cnt] = Move.new(startPos, count, FieldPos.new(getPossiblePos(gameStack[i].row,count),gameStack[i].column))
+        cnt+=1
         end
 		if(!startPos.same?(FieldPos.new(getPossibleNeg(gameStack[i].row,count),gameStack[i].column)))
-        listOfMoves[cnt+3] = Move.new(startPos, count, FieldPos.new(getPossibleNeg(gameStack[i].row,count),gameStack[i].column))
-        z+=1
+        listOfMoves[cnt] = Move.new(startPos, count, FieldPos.new(getPossibleNeg(gameStack[i].row,count),gameStack[i].column))
+        cnt+=1
         end
 		if(!startPos.same?( FieldPos.new(getPossiblePos(gameStack[i].row,count),getPossiblePos(gameStack[i].column,count))))
-		listOfMoves[cnt+4] = Move.new(startPos, count, FieldPos.new(getPossiblePos(gameStack[i].row,count),getPossiblePos(gameStack[i].column,count)))
-        z+=1
+		listOfMoves[cnt] = Move.new(startPos, count, FieldPos.new(getPossiblePos(gameStack[i].row,count),getPossiblePos(gameStack[i].column,count)))
+        cnt+=1
         end
 		if(!startPos.same?(FieldPos.new(getPossibleNeg(gameStack[i].row,count),getPossiblePos(gameStack[i].column,count))))
-		listOfMoves[cnt+5] = Move.new(startPos, count, FieldPos.new(getPossibleNeg(gameStack[i].row,count),getPossiblePos(gameStack[i].column,count)))
-		z+=1
+		listOfMoves[cnt] = Move.new(startPos, count, FieldPos.new(getPossibleNeg(gameStack[i].row,count),getPossiblePos(gameStack[i].column,count)))
+		cnt+=1
         end	
 		if(!startPos.same?(FieldPos.new(getPossiblePos(gameStack[i].row,count),getPossibleNeg(gameStack[i].column,count))))
-		listOfMoves[cnt+6] = Move.new(startPos, count, FieldPos.new(getPossiblePos(gameStack[i].row,count),getPossibleNeg(gameStack[i].column,count)))
-        z+=1
+		listOfMoves[cnt] = Move.new(startPos, count, FieldPos.new(getPossiblePos(gameStack[i].row,count),getPossibleNeg(gameStack[i].column,count)))
+        cnt+=1
         end
 		if(!startPos.same?(FieldPos.new(getPossibleNeg(gameStack[i].row,count),getPossibleNeg(gameStack[i].column,count))))
-		listOfMoves[cnt+7] = Move.new(startPos, count, FieldPos.new(getPossibleNeg(gameStack[i].row,count),getPossibleNeg(gameStack[i].column,count)))
-        z+=1
+		listOfMoves[cnt] = Move.new(startPos, count, FieldPos.new(getPossibleNeg(gameStack[i].row,count),getPossibleNeg(gameStack[i].column,count)))
+        cnt+=1
         end
 		count             -= 1
-        cnt               += z+1
     end
     end
     i +=1
@@ -145,48 +144,47 @@ def calculateMoves(gameStack,playerOnTurn)
       
     while count>0
         startPos= FieldPos.new(gameStack[i].row,gameStack[i].column)
-        z=0
+        
         if(!startPos.same?(FieldPos.new(gameStack[i].row,getPossiblePos(gameStack[i].column,count))))
-        listOfMoves[cnt+0] = Move.new(startPos, count, FieldPos.new(gameStack[i].row,getPossiblePos(gameStack[i].column,count)))
-        z+=1
+        listOfMoves[cnt] = Move.new(startPos, count, FieldPos.new(gameStack[i].row,getPossiblePos(gameStack[i].column,count)))
+        cnt+=1
         end
         
         if(!startPos.same?(FieldPos.new(gameStack[i].row,getPossibleNeg(gameStack[i].column,count))))
-        listOfMoves[cnt+1] = Move.new(startPos, count, FieldPos.new(gameStack[i].row,getPossibleNeg(gameStack[i].column,count)))
-        z+=1
+        listOfMoves[cnt] = Move.new(startPos, count, FieldPos.new(gameStack[i].row,getPossibleNeg(gameStack[i].column,count)))
+        cnt+=1
         end
         
         if(!startPos.same?(FieldPos.new(getPossiblePos(gameStack[i].row,count),gameStack[i].column)))
-        listOfMoves[cnt+2] = Move.new(startPos, count, FieldPos.new(getPossiblePos(gameStack[i].row,count),gameStack[i].column))
-        z+=1
+        listOfMoves[cnt] = Move.new(startPos, count, FieldPos.new(getPossiblePos(gameStack[i].row,count),gameStack[i].column))
+        cnt+=1
         end
         
         if(!startPos.same?(FieldPos.new(getPossibleNeg(gameStack[i].row,count),gameStack[i].column)))
-        listOfMoves[cnt+3] = Move.new(startPos, count, FieldPos.new(getPossibleNeg(gameStack[i].row,count),gameStack[i].column))
-        z+=1
+        listOfMoves[cnt] = Move.new(startPos, count, FieldPos.new(getPossibleNeg(gameStack[i].row,count),gameStack[i].column))
+        cnt+=1
         end
         
         if(!startPos.same?( FieldPos.new(getPossiblePos(gameStack[i].row,count),getPossiblePos(gameStack[i].column,count))))
-        listOfMoves[cnt+4] = Move.new(startPos, count, FieldPos.new(getPossiblePos(gameStack[i].row,count),getPossiblePos(gameStack[i].column,count)))
-        z+=1
+        listOfMoves[cnt] = Move.new(startPos, count, FieldPos.new(getPossiblePos(gameStack[i].row,count),getPossiblePos(gameStack[i].column,count)))
+        cnt+=1
         end
         
         if(!startPos.same?(FieldPos.new(getPossibleNeg(gameStack[i].row,count),getPossiblePos(gameStack[i].column,count))))
-        listOfMoves[cnt+5] = Move.new(startPos, count, FieldPos.new(getPossibleNeg(gameStack[i].row,count),getPossiblePos(gameStack[i].column,count)))
-        z+=1
+        listOfMoves[cnt] = Move.new(startPos, count, FieldPos.new(getPossibleNeg(gameStack[i].row,count),getPossiblePos(gameStack[i].column,count)))
+        cnt+=1
         end
         
         if(!startPos.same?(FieldPos.new(getPossiblePos(gameStack[i].row,count),getPossibleNeg(gameStack[i].column,count))))
-        listOfMoves[cnt+6] = Move.new(startPos, count, FieldPos.new(getPossiblePos(gameStack[i].row,count),getPossibleNeg(gameStack[i].column,count)))
-        z+=1
+        listOfMoves[cnt] = Move.new(startPos, count, FieldPos.new(getPossiblePos(gameStack[i].row,count),getPossibleNeg(gameStack[i].column,count)))
+        cnt+=1
         end
         
         if(!startPos.same?(FieldPos.new(getPossibleNeg(gameStack[i].row,count),getPossibleNeg(gameStack[i].column,count))))
-        listOfMoves[cnt+7] = Move.new(startPos, count, FieldPos.new(getPossibleNeg(gameStack[i].row,count),getPossibleNeg(gameStack[i].column,count)))
-        z+=1
+        listOfMoves[cnt] = Move.new(startPos, count, FieldPos.new(getPossibleNeg(gameStack[i].row,count),getPossibleNeg(gameStack[i].column,count)))
+        cnt+=1
         end
         count             -= 1
-        cnt               += z+1
     end
     end
     i +=1
@@ -204,10 +202,9 @@ def listMoves(completeFen)
     player        = splitCompleteFen(completeFen)[1]
     gameStacklist = createGameStackList(fen)
     moves         = calculateMoves(gameStacklist,player)
-    moves.delete(nil)
+    
     clearedMoves  = moves.uniq(&:asString)
     movesString   = "\"["
-	
     clearedMoves.each do |move|
     if(move.to_s!="")
     movesString += move.to_s+","
