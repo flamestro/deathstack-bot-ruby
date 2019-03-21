@@ -24,6 +24,7 @@ end
 #[0] -> String	[a.e. "rr,rr,rr,rr,rr/,r,,rr,,rr/rrr,rrr,r,,rrr,r"]
 #[1] -> String  [a.e. "b" or "r"]
 #complete fen :: String [a.e. "rr,rr,rr,rr,rr/,r,,rr,,rr/rrr,rrr,r,,rrr,r r"]
+#complete fen :: String [a.e. "rr,rr,rr,rr,rr,rr/,,,,,/,,,,,/,,,,,/,,,,,/bb,bb,bb,bb,bb,bb r"]
 def splitCompleteFen(input)
     splitedList = input.split(" ")
 end

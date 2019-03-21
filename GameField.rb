@@ -108,7 +108,7 @@ class Move
        result =  @startPos == other.startPos && @steps == other.steps && @endPos == other.endPos
     end
 	#this method returns the move in String form -> startPos-steps-endPos
-    def to_s 
+    def to_s
         (startPos.to_s)+"-"+(steps.to_s)+"-"+(endPos.to_s)
     end
 	
@@ -124,6 +124,7 @@ class Move
 		elsif elem.ownedBy==player &&elem.value >4
 			val += (elem.value-4)*5+40
 		end
+        
 	end
 	val
 	end
