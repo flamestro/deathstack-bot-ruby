@@ -1,5 +1,5 @@
 # dsbotRuby
-Bot for DeathStacks ( Boardgame ) <br>
+Bot for Death Stacks  ( Boardgame ) <br>
 
 This is a bot written in Ruby.  <br>
 I did this for fun and to learn ruby. <br>
