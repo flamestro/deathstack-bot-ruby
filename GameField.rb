@@ -10,7 +10,6 @@ require_relative 'ValuedMoveMaker'
     4   => 'd',
     5   => 'e',
     6   => 'f',
-    nil => 'x'
     }
 #this object saves informations about the different positions on the gamefield
 class GameStack 
@@ -79,7 +78,7 @@ class FieldPos
 	#this method converts the position on the gamefield in to a readable string (like "a2","b4"...)
     def to_s
 	#if something went wrong and the given position is not in a valid gamefield then "x" will be returned
-    if($columnConv[column] == nil || row.to_s == "" )
+    if($columnConv[column] == nil || row == nil|| row.to_s == "" || column>$width_height|| column< 1||row>$width_height||row<1)
         "x"
     else
         $columnConv[column]+row.to_s
@@ -112,7 +111,7 @@ class Move
         (startPos.to_s)+"-"+(steps.to_s)+"-"+(endPos.to_s)
     end
 	
-    #values the method calling move object, with a given player and a given GameStackList
+    #values the method is calling move object, with a given player and a given GameStackList
 	def valueMove(gsList,player)
 	val = 0
     gsListNew = Marshal::load(Marshal.dump(gsList))

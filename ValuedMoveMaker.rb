@@ -1,6 +1,6 @@
 require_relative 'HelpingMethods'
 
-$iterationDepth = 2
+$iterationDepth = 4
 #return first calculated move
 def getMove(completeFen)
 	fen           = splitCompleteFen(completeFen)[0]
@@ -49,7 +49,6 @@ def valueBest(moves,gsList,player)
        
 	end
    
-    p valMoves
     valMovesnew = Marshal::load(Marshal.dump(valMoves))
     if valMovesnew.length <= 1 
     bestvals = valMovesnew.sort[0]
@@ -82,13 +81,10 @@ def minimax(moves,givenGsList,player)
     valuesMoves = Array.new
     gsList = Marshal::load(Marshal.dump(givenGsList))
     moves.each_with_index do |move,index|
-		puts (move.to_s) +"  index " + index.to_s + "  minimax value " + miniMaxred(move,gsList,player,player,$iterationDepth).to_s + "  MoveValue  "+ move.valueMove(givenGsList,player).to_s
-		puts "before Move " + gsAsFen(gsList)
-		puts "after Move "  + gsAsFen(afterMove(gsList,move))
-        valuesMoves[index] = miniMaxred(move,gsList,player,player,$iterationDepth)
+    valuesMoves[index] = miniMaxred(move,gsList,player,player,$iterationDepth)
     end
     indexOfBest = valuesMoves.index(valuesMoves.max)
-    p valuesMoves
+   
     moves[indexOfBest]
 end
 def boardFinished(gsList,player)
@@ -122,10 +118,10 @@ def miniMaxred( move,  givenGsList,playerstart,playeriterate,iteration)
     if iteration ==0    
         return move.valueMove(gsList,playerstart)
     elsif boardFinished(afterMove(gsList,move),playerstart)
-		puts  1000+pow(10,iteration)
+		
         return  1000+pow(10,iteration)
     elsif boardFinished(afterMove(gsList,move),changePlayer(playerstart))
-		puts -1000-pow(10,iteration)
+		
         return -1000-pow(10,iteration)
     end
     max                       = playeriterate == playerstart
@@ -136,9 +132,7 @@ def miniMaxred( move,  givenGsList,playerstart,playeriterate,iteration)
     
     leftNode                  = miniMaxred(bestValued[0],afterMove(gsList,move),playerstart,playeriterate,iteration-1)
     rightNode                 = miniMaxred(bestValued[1],afterMove(gsList,move),playerstart,playeriterate,iteration-1)
-    puts leftNode
-    puts rightNode
-    puts
+    
     if      max && leftNode > rightNode 
                 leftNode    +pow(10,iteration)
     elsif   max && leftNode <= rightNode 
